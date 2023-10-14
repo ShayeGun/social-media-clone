@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata6:/data/db
+    environment:
+      - POSTGRES_PASSWORD=Shy@7200
+      - POSTGRES_USER=Shy
+      - POSTGRES_DB=social_media
+
+volumes:
+  dbdata6:
