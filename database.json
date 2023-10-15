@@ -5,5 +5,6 @@
       "password": "Shy@7200",
       "host": "localhost",
       "database": "social_media"
-    }
+    },
+    "sql-file" : true
   }
