@@ -29,6 +29,18 @@ class PostgresDB {
 
         return rows;
     }
+
+    public async select(tableName: string, filter: Record<string, any>) {
+        const filters: string[] = [];
+
+        for (let [k, v] of Object.entries(filter)) {
+            typeof v === 'string' ? filters.push(`${k} LIKE '%${v}%'`) : filters.push(`${k}=${v}`);
+        }
+
+        const { rows } = await this.query(`SELECT * FROM "${tableName}" WHERE ${filters.join(' AND ')};`);
+
+        return rows;
+    }
 }
 
 const postgres = new PostgresDB();

@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { addNewUser } from "../controllers";
+import { addNewUser, selectUser } from "../controllers";
 const router = Router();
 
 router.route('/test')
-    .post(addNewUser);
+    .post(addNewUser)
+    .get(selectUser);
 
 export { router as mainRouter };

@@ -10,3 +10,11 @@ export const addNewUser = catchAsync(async (req: Request, res: Response, next: N
         result: result
     });
 });
+
+export const selectUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const result = await postgres.select('user', req.query);
+    res.json({
+        data: "testing successful",
+        result: result
+    });
+});

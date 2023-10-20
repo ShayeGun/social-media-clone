@@ -13,12 +13,10 @@ const sendError = (err: CustomError | Error, res: Response) => {
         // delete (err as any).response;
         delete (err as any).config;
 
-        // console.log(Object.keys(err));
-        // for (const [k, v] of Object.entries(err)) {
-        //     console.log(`${k} ===> ${v}`);
-        // }
-
-        console.log(err);
+        console.log(Object.keys(err));
+        for (const [k, v] of Object.entries(err)) {
+            console.log(`${k} ===> ${v}`);
+        }
 
 
         res.status(500).send('oh oh sth bad happened 😓');
@@ -96,7 +94,7 @@ const errorHandler: ErrorRequestHandler = async (err, req, res, next) => {
     else if (error.name === 'AxiosError') {
         error = handleAxiosErrors(error);
     }
-    else if (error.code === '42703') {
+    else if (error.severity === 'ERROR') {
         error = handlePostgresErrors(error);
     }
 
