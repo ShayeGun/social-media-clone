@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { testController } from "../controllers";
+import { addNewUser } from "../controllers";
 const router = Router();
 
 router.route('/test')
-    .all(testController);
+    .post(addNewUser);
 
 export { router as mainRouter };

@@ -13,10 +13,13 @@ const sendError = (err: CustomError | Error, res: Response) => {
         // delete (err as any).response;
         delete (err as any).config;
 
-        console.log(Object.keys(err));
-        for (const [k, v] of Object.entries(err)) {
-            console.log(`${k} ===> ${v}`);
-        }
+        // console.log(Object.keys(err));
+        // for (const [k, v] of Object.entries(err)) {
+        //     console.log(`${k} ===> ${v}`);
+        // }
+
+        console.log(err);
+
 
         res.status(500).send('oh oh sth bad happened 😓');
 
@@ -65,6 +68,10 @@ function handleAxiosErrors(err: any) {
     return new CustomError(`Daap ${error.statusText}`, error.status, error.status);
 }
 
+function handlePostgresErrors(err: any) {
+    return new CustomError(err.message, 400, 1300);
+}
+
 
 const errorHandler: ErrorRequestHandler = async (err, req, res, next) => {
 
@@ -88,7 +95,10 @@ const errorHandler: ErrorRequestHandler = async (err, req, res, next) => {
 
     else if (error.name === 'AxiosError') {
         error = handleAxiosErrors(error);
-    };
+    }
+    else if (error.code === '42703') {
+        error = handlePostgresErrors(error);
+    }
 
     sendError(error, res);
     next();

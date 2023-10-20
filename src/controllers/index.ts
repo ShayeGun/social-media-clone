@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { catchAsync } from "../utils/catch-async";
-import * as db from "../database";
+import { postgres } from "../database";
 
 
-export const testController = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const { rows } = await db.query('SELECT NOW()');
+export const addNewUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const result = await postgres.insert('user', req.body);
     res.json({
         data: "testing successful",
-        result: rows
+        result: result
     });
 });
